@@ -1,0 +1,47 @@
+services:
+  db:
+    image: "mysql:latest"
+    environment:
+      - MYSQL_ROOT_PASSWORD=kimKim!1
+      - MYSQL_USER=kim
+      - MYSQL_PASSWORD=kim
+      - MYSQL_DATABASE=kim
+    ports:
+      - 48010:3306
+      # - 3000:3000
+  createjazz:
+    build: .
+    image: "docker-flask-mysql"
+    ports:
+      - "48011:5000"
+    depends_on:
+      - db
+    # postgres://db:5432
+    environment:
+      # - MYSQLCONNECTOR_SOMETHING=mysql://db:5432
+      - DB_HOST=db
+      - DB_USER=kim
+      - DB_PASSWORD=kim
+      - DB_NAME=kim
+
+      # 'host': os.environ.get('DB_HOST'),
+      # 5     'user': os.environ.get('DB_USER'),
+      # 6     'password': os.environ.get('DB_PASSWORD'),
+      # 7     'database': os.environ.get('DB_NAME')
+
+  #   network_mode: "service:vpn"
+  # vpn:
+
+
+# In a .env environment file - can set default values for any environment
+# variables referenced in the Compose file, or used to configure Compose.
+# cat .env
+# MYSQL_ROOT_PASSWORD=kimKim!1
+# MYSQL_USER=kim
+# MYSQL_PASSWORD=kim
+# MYSQL_DATABASE=kim
+#
+# cat docker-compose.yml
+# services:
+#   web:
+#     imge: "webapp:${TAG}"
